@@ -172,6 +172,9 @@ pub fn download_file_with_resume(
         Ok(_) => Ok(()),
         Err(e) => {
             let is_client_error = match e.kind() {
+                // Connection errors we try not to blame on ourselves
+                // since they can be transient network issues and allsorts
+                ErrorKind::Download(DEK::ConnectionError) => false,
                 // Specifically treat the bad partial range error as not our
                 // fault in case it was something odd which happened.
                 ErrorKind::Download(DEK::HttpStatus(416)) => false,
