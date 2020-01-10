@@ -17,6 +17,10 @@ error_chain! {
         FileNotFound {
             description("file not found")
         }
+        ConnectionError {
+            description("error establishing http connection")
+            display("error establishing http connection")
+        }
         BackendUnavailable(be: &'static str) {
             description("download backend unavailable")
             display("download backend '{}' unavailable", be)

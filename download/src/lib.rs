@@ -267,7 +267,7 @@ pub mod reqwest_be {
             return Ok(());
         }
 
-        let mut res = request(url, resume_from).chain_err(|| "failed to make network request")?;
+        let mut res = request(url, resume_from).chain_err(|| ErrorKind::ConnectionError)?;
 
         if !res.status().is_success() {
             let code: u16 = res.status().into();
