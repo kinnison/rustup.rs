@@ -11,7 +11,7 @@ on:
       - "*"     # skip-master skip-stable
   push: 
     branches:
-      - kinnison/snapcraft # skip-master skip-stable
+      - kinnison/snaptest # skip-master skip-stable
       - master  # skip-pr skip-stable
       - stable  # skip-pr skip-master
   schedule: # skip-pr skip-stable
