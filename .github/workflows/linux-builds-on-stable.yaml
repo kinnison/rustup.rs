@@ -167,7 +167,7 @@ jobs:
         with:
           path: snapcraft
         if: matrix.snap_arch != ''
-      - uses: jhenstridge/snapcraft-publish-action@v1
+      - uses: jhenstridge/snapcraft-publish-action@master
         with:
           store_login: ${{ secrets.SNAPCRAFT_TOKEN }}
           snap: ${{ steps.snapcraftbuild.snap }}
