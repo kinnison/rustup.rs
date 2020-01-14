@@ -183,8 +183,8 @@ jobs:
           snap: ${{ steps.snapcraftbuild.snap }}
           release: edge # skip-pr skip-stable
           release: beta # skip-pr skip-master
-        if: matrix.snap_arch != '' # skip-pr
-        if: matrix.snap_arch == 'not-for-prs' # skip-master skip-stable
+        if: matrix.snap_arch != ''
+        if: matrix.snap_arch == 'not-for-prs' # skip-master skip-stable skip-pr
       - name: Clear the cargo caches
         run: |
           cargo install cargo-cache --no-default-features --features ci-autoclean
