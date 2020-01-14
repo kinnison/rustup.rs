@@ -142,7 +142,7 @@ jobs:
       - uses: jhenstridge/snapcraft-publish-action@master
         with:
           store_login: ${{ secrets.SNAPCRAFT_TOKEN }}
-          snap: ${{ steps.snapcraftbuild.snap }}
+          snap: ${{ steps.snapcraftbuild.outputs.snap }}
         if: matrix.snap_arch != ''
       - name: Clear the cargo caches
         run: |

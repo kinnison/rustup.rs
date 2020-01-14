@@ -151,7 +151,7 @@ jobs:
       - uses: jhenstridge/snapcraft-publish-action@master
         with:
           store_login: ${{ secrets.SNAPCRAFT_TOKEN }}
-          snap: ${{ steps.snapcraftbuild.snap }}
+          snap: ${{ steps.snapcraftbuild.outputs.snap }}
           release: edge # skip-pr skip-stable
         if: matrix.snap_arch != ''
       - name: Clear the cargo caches
