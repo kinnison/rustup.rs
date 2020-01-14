@@ -25,9 +25,9 @@ jobs:
       fail-fast: false
       matrix:
         target:
-          - x86_64-unknown-linux-gnu
+          - x86_64-unknown-linux-gnu # skip-pr
           - armv7-unknown-linux-gnueabihf
-          - aarch64-linux-android
+          - aarch64-linux-android # skip-pr
           - aarch64-unknown-linux-gnu     # skip-pr
           - powerpc64-unknown-linux-gnu   # skip-pr
           - x86_64-unknown-linux-musl     # skip-pr
