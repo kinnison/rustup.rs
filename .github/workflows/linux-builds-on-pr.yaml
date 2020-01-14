@@ -143,7 +143,7 @@ jobs:
         with:
           store_login: ${{ secrets.SNAPCRAFT_TOKEN }}
           snap: ${{ steps.snapcraftbuild.snap }}
-        if: matrix.snap_arch == 'not-for-prs' # skip-master skip-stable
+        if: matrix.snap_arch != ''
       - name: Clear the cargo caches
         run: |
           cargo install cargo-cache --no-default-features --features ci-autoclean

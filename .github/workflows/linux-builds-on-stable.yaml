@@ -172,7 +172,7 @@ jobs:
           store_login: ${{ secrets.SNAPCRAFT_TOKEN }}
           snap: ${{ steps.snapcraftbuild.snap }}
           release: beta # skip-pr skip-master
-        if: matrix.snap_arch != '' # skip-pr
+        if: matrix.snap_arch != ''
       - name: Clear the cargo caches
         run: |
           cargo install cargo-cache --no-default-features --features ci-autoclean
