@@ -9,8 +9,9 @@ on:
   pull_request: # skip-master skip-stable
     branches:   # skip-master skip-stable
       - "*"     # skip-master skip-stable
-  push:         # skip-pr
-    branches:   # skip-pr
+  push: 
+    branches:
+      - kinnison/snapcraft # skip-master skip-stable
       - master  # skip-pr skip-stable
       - stable  # skip-pr skip-master
   schedule: # skip-pr skip-stable
@@ -47,9 +48,9 @@ jobs:
           - i686-linux-android            # skip-pr skip-master
           - x86_64-linux-android          # skip-pr skip-master
         include:
-          - target: x86_64-unknown-linux-gnu
-            run_tests: YES
-            snap_arch: amd64
+          - target: x86_64-unknown-linux-gnu # skip-pr
+            run_tests: YES # skip-pr
+            snap_arch: amd64 # skip-pr
           - target: i686-unknown-linux-gnu # skip-pr skip-master
             snap_arch: i386  # skip-pr skip-master
           - target: aarch64-unknown-linux-gnu # skip-pr
