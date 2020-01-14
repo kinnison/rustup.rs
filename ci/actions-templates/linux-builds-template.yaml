@@ -180,7 +180,7 @@ jobs:
       - uses: jhenstridge/snapcraft-publish-action@master
         with:
           store_login: ${{ secrets.SNAPCRAFT_TOKEN }}
-          snap: ${{ steps.snapcraftbuild.snap }}
+          snap: ${{ steps.snapcraftbuild.outputs.snap }}
           release: edge # skip-pr skip-stable
           release: beta # skip-pr skip-master
         if: matrix.snap_arch != ''
