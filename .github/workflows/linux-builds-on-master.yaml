@@ -4,8 +4,8 @@
 name: Linux (master) # skip-pr skip-stable
 
 on:
-  push:         # skip-pr
-    branches:   # skip-pr
+  push: 
+    branches:
       - master  # skip-pr skip-stable
   schedule: # skip-pr skip-stable
     - cron: "30 0 * * 1" # Every Monday at half past midnight UTC skip-pr skip-stable
@@ -25,9 +25,9 @@ jobs:
           - powerpc64-unknown-linux-gnu   # skip-pr
           - x86_64-unknown-linux-musl     # skip-pr
         include:
-          - target: x86_64-unknown-linux-gnu
-            run_tests: YES
-            snap_arch: amd64
+          - target: x86_64-unknown-linux-gnu # skip-pr
+            run_tests: YES # skip-pr
+            snap_arch: amd64 # skip-pr
           - target: aarch64-unknown-linux-gnu # skip-pr
             snap_arch: arm64 # skip-pr
           - target: armv7-unknown-linux-gnueabihf
@@ -144,9 +144,16 @@ jobs:
           SNAP_ARCH: ${{ matrix.snap_arch }}
           SNAP_EDGE: 1 # skip-stable
       - uses: jhenstridge/snapcraft-build-action@v1
+        id: snapcraftbuild
         with:
           path: snapcraft
         if: matrix.snap_arch != ''
+      - uses: jhenstridge/snapcraft-publish-action@v1
+        with:
+          store_login: ${{ secrets.SNAPCRAFT_TOKEN }}
+          snap: ${{ steps.snapcraftbuild.snap }}
+          release: edge # skip-pr skip-stable
+        if: matrix.snap_arch != '' # skip-pr
       - name: Clear the cargo caches
         run: |
           cargo install cargo-cache --no-default-features --features ci-autoclean

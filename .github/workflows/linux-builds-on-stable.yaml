@@ -4,8 +4,8 @@
 name: Linux (stable) # skip-master skip-pr
 
 on:
-  push:         # skip-pr
-    branches:   # skip-pr
+  push: 
+    branches:
       - stable  # skip-pr skip-master
 
 jobs:
@@ -39,9 +39,9 @@ jobs:
           - i686-linux-android            # skip-pr skip-master
           - x86_64-linux-android          # skip-pr skip-master
         include:
-          - target: x86_64-unknown-linux-gnu
-            run_tests: YES
-            snap_arch: amd64
+          - target: x86_64-unknown-linux-gnu # skip-pr
+            run_tests: YES # skip-pr
+            snap_arch: amd64 # skip-pr
           - target: i686-unknown-linux-gnu # skip-pr skip-master
             snap_arch: i386  # skip-pr skip-master
           - target: aarch64-unknown-linux-gnu # skip-pr
@@ -163,9 +163,16 @@ jobs:
           DO_SNAP: 1
           SNAP_ARCH: ${{ matrix.snap_arch }}
       - uses: jhenstridge/snapcraft-build-action@v1
+        id: snapcraftbuild
         with:
           path: snapcraft
         if: matrix.snap_arch != ''
+      - uses: jhenstridge/snapcraft-publish-action@v1
+        with:
+          store_login: ${{ secrets.SNAPCRAFT_TOKEN }}
+          snap: ${{ steps.snapcraftbuild.snap }}
+          release: beta # skip-pr skip-master
+        if: matrix.snap_arch != '' # skip-pr
       - name: Clear the cargo caches
         run: |
           cargo install cargo-cache --no-default-features --features ci-autoclean

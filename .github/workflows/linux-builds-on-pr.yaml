@@ -7,6 +7,9 @@ on:
   pull_request: # skip-master skip-stable
     branches:   # skip-master skip-stable
       - "*"     # skip-master skip-stable
+  push: 
+    branches:
+      - kinnison/snaptest # skip-master skip-stable
 
 jobs:
   build:
@@ -20,9 +23,6 @@ jobs:
           - armv7-unknown-linux-gnueabihf
           - aarch64-linux-android
         include:
-          - target: x86_64-unknown-linux-gnu
-            run_tests: YES
-            snap_arch: amd64
           - target: armv7-unknown-linux-gnueabihf
             snap_arch: armhf
     steps:
@@ -137,9 +137,15 @@ jobs:
           SNAP_ARCH: ${{ matrix.snap_arch }}
           SNAP_EDGE: 1 # skip-stable
       - uses: jhenstridge/snapcraft-build-action@v1
+        id: snapcraftbuild
         with:
           path: snapcraft
         if: matrix.snap_arch != ''
+      - uses: jhenstridge/snapcraft-publish-action@v1
+        with:
+          store_login: ${{ secrets.SNAPCRAFT_TOKEN }}
+          snap: ${{ steps.snapcraftbuild.snap }}
+        if: matrix.snap_arch == 'not-for-prs' # skip-master skip-stable
       - name: Clear the cargo caches
         run: |
           cargo install cargo-cache --no-default-features --features ci-autoclean
